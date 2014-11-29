@@ -56,7 +56,7 @@ public class ReservaTest {
     public void testVerificarCupo() {
         System.out.println("Verificar Cupo En Conferencia");
         Reserva test = new Reserva();
-        boolean cupo = test.verificarCupo();
+        boolean cupo = test.verificarCupo(new Conferencia());
         System.out.println("Hay Cupo?: " + cupo);
         assertTrue(cupo);
     }
@@ -68,7 +68,7 @@ public class ReservaTest {
     public void testGuardarReserva() {
         System.out.println("Guardar la reserva en la BD");
         Reserva test = new Reserva();
-        boolean reserva = test.guardarReserva();
+        boolean reserva = test.guardarReserva(4, 5, "29/11/2014", "Reservado");
         System.out.println("Se realizo la reserva correctamente?: " + reserva);
         assertTrue(reserva);
     }
@@ -80,8 +80,8 @@ public class ReservaTest {
     public void testEnviarEmail() {
         System.out.println("Enviar Email");
         Reserva test = new Reserva();
-        boolean mailenviado = test.enviarEmail("to.danielrp@gmail.com", "Mail de"
-                + " Confirmacion", "Su reserva se realizo con éxito!!");
+        boolean mailenviado = test.enviarEmail("goomaku@gmail.com", "Mail de"
+                + " Confirmacion", test.crearEmail());
         System.out.println("Se realizo correctamente el envio del email?: " + mailenviado);
         assertTrue(mailenviado);
     }

@@ -20,19 +20,35 @@ import javax.mail.internet.MimeMessage;
 public class Reserva {
 
     public boolean userLoginCheck() {
-        return false;
+        return Login.getSesion();
     }
 
-    public boolean verificarCupo() {
-        return false;
+    public boolean verificarCupo(Conferencia conf) {
+        return conf.MaxCupo > conf.total_inscritos;
     }
 
-    public boolean guardarReserva() {
-        return false;
+    public boolean guardarReserva(int id_participante, int id_conferencia, String fecha, String estado) {
+         boolean res = false;
+        String sql = "INSERT INTO reserva VALUES(" + id_participante + ", "
+                + id_conferencia + ", '" + fecha + "', '" + estado +"');";
+        res = PostgresConn.updateDB(sql);
+        System.out.println(res);
+        return res;
     }
 
     public String getString() {
         return "Hola";
+    }
+    
+    public String crearEmail() {
+    	
+    	String data = "*** Sus datos de su Reserva: ***\n\n" +
+    	              "CONFERENCIA: " + "CCBOL" + "\n" +
+    	              "FECHA:" + "29/11/2014" + "\n" +
+    	              "CIUDAD:" + "Tarija" + "\n" +
+    	              "DIRECCIÓN:" + "ELM Street" + "\n"
+                    + "Costo: " + new modelo.funcioncambio().valor(120, "BRL", "BOB") + " Reales";    	    	    
+    	return data;
     }
 
     public boolean enviarEmail(String sendEmailTo, String subject, String msg) {
