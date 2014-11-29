@@ -1,0 +1,22 @@
+mport junit.framework.Assert;
+
+
+public class Crdencial{
+
+	
+	public void test_logueado(){
+	Credencial creden = new Credencial();
+	Assert.assertEquals(true,creden.logueado());
+	
+	} 
+	public void test_pagado(){
+	Credencial creden = new Credencial();
+	Assert.assertEquals(true,creden.pagado());
+	
+	}
+	public void test_inscrito(){
+		Credencial creden = new Credencial();
+		Assert.assertEquals(true,creden.inscrito());
+		
+		}
+}
