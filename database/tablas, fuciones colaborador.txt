@@ -1,0 +1,56 @@
+CREATE TABLE colaborador
+(
+id_colaborador serial NOT NULL,
+nombre_colaborador character varying(20),
+apellido_colaborador character varyin(30),
+dni_colaborador int,
+CONSTRAINT pk_colaborador PRIMARY KEY(id_colaborador)
+);
+
+CREATE TABLE funcion
+(
+  id_funcion serial NOT NULL,
+  funcion character varying(30) NOT NULL,
+  CONSTRAINT pk_funcion PRIMARY KEY (id_funcion)
+)
+
+CREATE OR REPLACE FUNCTION registrar_colaborador(text, text, text,text, integer, integer)
+  RETURNS void AS
+$BODY$       
+DECLARE 
+nombre ALIAS FOR $1;
+apellido ALIAS FOR $2;
+correo ALIAS FOR $3;
+funcion ALIAS FOR $4;
+dni ALIAS FOR $5;
+telefono ALIAS FOR $6;
+temporal record;
+id int;
+BEGIN
+id:=0;
+   FOR temporal IN SELECT * FROM funcion LOOP
+     IF(temporal.funcion = funcion)THEN
+        id:=temporal.id_funcion;
+        INSERT INTO colaborador(id_funcion,nombre_colaborador,apellido_colaborador,correo_colaborador,dni_colaborador,telefono_colaborador)VALUES(id,nombre,apellido,correo,dni,telefono);	         
+     END IF;
+
+    END LOOP;
+    RETURN;
+    END;
+    $BODY$
+  LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION lista_colaboradores()
+  RETURNS SETOF record AS
+$BODY$ 
+declare 
+temporal RECORD;
+BEGIN
+for temporal IN SELECT * FROM colaborador LOOP
+RETURN NEXT temporal;
+END LOOP;
+RETURN;
+END;
+$BODY$
+  LANGUAGE plpgsql;
